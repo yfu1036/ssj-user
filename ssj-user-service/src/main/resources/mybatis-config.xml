@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+	 	<!-- 全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存 -->
+  		<setting name="cacheEnabled" value="true"/>
+		<!-- 延迟加载的全局开关。当开启时，所有关联对象都会延迟加载 -->
+  		<setting name="lazyLoadingEnabled" value="true"/>
+		<!-- 是否允许单一语句返回多结果集-->
+  		<setting name="multipleResultSetsEnabled" value="true"/>
+		<!-- 使用列标签代替列名 -->
+  		<setting name="useColumnLabel" value="true"/>
+		<!-- 允许 JDBC 支持自动生成主键 -->
+  		<setting name="useGeneratedKeys" value="false"/>
+		<!-- 指定 MyBatis 应如何自动映射列到字段或属性 -->
+  		<setting name="autoMappingBehavior" value="PARTIAL"/>
+		<!-- 指定发现自动映射目标未知列（或者未知属性类型）的行为 -->
+  		<setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
+		<!-- 配置默认的执行器。SIMPLE 就是普通的执行器 -->
+  		<setting name="defaultExecutorType" value="SIMPLE"/>
+         <!-- 设置超时时间，它决定驱动等待一个数据库响应的时间秒数 -->  
+  		<setting name="defaultStatementTimeout" value="25"/>
+		<!-- 为驱动的结果集获取数量（fetchSize）设置一个提示值 -->
+  		<setting name="defaultFetchSize" value="100"/>
+		<!-- 允许在嵌套语句中使用分页（ResultHandler）如果允许使用则设置为false -->
+  		<setting name="safeRowBoundsEnabled" value="false"/>
+		<!-- 是否开启自动驼峰命名规则（camel case）映射 -->
+  		<setting name="mapUnderscoreToCamelCase" value="false"/>
+		<!-- MyBatis 利用本地缓存机制防止循环引用和加速重复嵌套查询。 默认值为 SESSION，这种情况下会缓存一个会话中执行的所有查询 -->
+  		<setting name="localCacheScope" value="SESSION"/>
+		<!-- 当没有为参数提供特定的 JDBC 类型时，为空值指定 JDBC 类型 -->
+  		<setting name="jdbcTypeForNull" value="OTHER"/>
+		<!-- 指定哪个对象的方法触发一次延迟加载 -->
+  		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+	</settings>
+
+	<!-- 类型映射 -->
+	<typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+    </typeAliases>
+    
+    <!-- 配置分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 设置数据库类型 Oracle,Mysql,MariaDB,SQLite,Hsqldb,PostgreSQL六种数据库-->
+            <property name="helperDialect" value="PostgreSQL"/>
+             <!-- 3.3.0版本可用 - 分页参数合理化，默认false禁用 -->
+		     <!-- 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页 -->
+		     <!-- 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据 -->
+		     <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+</configuration>
