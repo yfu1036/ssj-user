@@ -20,7 +20,7 @@ public class UserInfo {
 
     private String nickName;
 
-    private Integer valid;
+    private Short isValid;
 
     private Date createTime;
 

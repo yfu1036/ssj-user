@@ -1,26 +1,23 @@
 package com.ssj.user.service.impl;
 
-import java.util.UUID;
-
-import com.ssj.user.component.RedisJedisUtil;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import com.alibaba.fastjson.JSONObject;
 import com.ssj.user.common.CommonBusinessException;
 import com.ssj.user.common.CommonConst;
+import com.ssj.user.component.RedisJedisUtil;
 import com.ssj.user.component.RedisTemplateUtil;
 import com.ssj.user.enums.ResponseCodeEnum;
 import com.ssj.user.mapper.UserInfoMapper;
 import com.ssj.user.model.UserInfo;
 import com.ssj.user.request.WxloginRequest;
 import com.ssj.user.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -53,13 +50,13 @@ public class UserServiceImpl implements UserService {
 		String url = String.format(sessionUrl, appId, appSecret, wxReq.getCode());
 		String userInfoString = restTemplate.getForObject(url, String.class);
 		log.info("微信登录获取信息:{}", userInfoString);
-		if(StringUtils.isBlank(userInfoString)) {
+		JSONObject wxJson = JSONObject.parseObject(userInfoString);
+		if(StringUtils.isBlank(userInfoString) || StringUtils.isNotBlank(wxJson.get("errcode").toString())) {
 			throw new CommonBusinessException(ResponseCodeEnum.GET_WXINFO_ERROR.getCode(), 
 					ResponseCodeEnum.GET_WXINFO_ERROR.getMsg());
 		}
 		
 		//2.调用微信后台获取该用户unionId
-		JSONObject wxJson = JSONObject.parseObject(userInfoString);
 		String wxUnionId = null != wxJson.get("unionid") ? wxJson.get("unionid").toString() : wxJson.get("openid").toString();
 		if(StringUtils.isBlank(wxUnionId)) {
 			throw new CommonBusinessException(ResponseCodeEnum.GET_WXINFO_ERROR.getCode(), 

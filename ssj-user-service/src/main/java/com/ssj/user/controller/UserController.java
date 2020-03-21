@@ -26,9 +26,7 @@ public class UserController {
 	@ApiOperation(value = "微信登录", notes = "微信登录")
 	@PostMapping("/api/release/wxLogin")
 	public CommonResponse<String> wxLogin(@Valid @RequestBody WxloginRequest wxReq) {
-		log.info("/api/release/wxLogin入参:{}", wxReq);
 		String token = userService.wxLogin(wxReq);
-		log.info("/api/release/wxLogin返回token:{}", token);
 		return CommonResponse.success(token);
 	}
 }

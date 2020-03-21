@@ -1,15 +1,17 @@
 package com.ssj.user.request;
 
-import javax.validation.constraints.NotBlank;
-
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 public class WxloginRequest {
 
+	@ApiModelProperty(value="微信code")
 	@NotBlank(message = "code不能为空")
 	private String code;
 
-	//@NotBlank(message = "微信昵称不能为空")
+	@ApiModelProperty(value="微信昵称")
 	private String nickName;
 }

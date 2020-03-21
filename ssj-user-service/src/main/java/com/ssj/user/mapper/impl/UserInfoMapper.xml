@@ -1,8 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ssj.user.mapper.UserInfoMapper">
-  <resultMap id="BaseResultMap" type="com.ssj.user.model.UserInfo">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.model.UserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="card_id" jdbcType="VARCHAR" property="cardId" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="union_id" jdbcType="VARCHAR" property="unionId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="is_valid" jdbcType="SMALLINT" property="isValid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, real_name, card_id, phone_number, union_id, nick_name, is_valid, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ssj_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ssj_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.model.UserInfo">
+    insert into ssj_user_info (id, user_id, real_name,
+      card_id, phone_number, union_id,
+      nick_name, is_valid, create_time,
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+      #{cardId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR},
+      #{nickName,jdbcType=VARCHAR}, #{isValid,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.UserInfo">
+    insert into ssj_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="unionId != null">
+        union_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null">
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.UserInfo">
+    update ssj_user_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null">
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null">
+        union_id = #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.UserInfo">
+    update ssj_user_info
+    set user_id = #{userId,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      union_id = #{unionId,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.model.UserInfo">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
@@ -15,11 +163,11 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, real_name, card_id, phone_number, union_id, nick_name, valid, create_time, 
+    id, user_id, real_name, card_id, phone_number, union_id, nick_name, valid, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from ssj_user_info
     where id = #{id,jdbcType=BIGINT}
@@ -28,17 +176,17 @@
     delete from ssj_user_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ssj.user.model.UserInfo">
-    insert into ssj_user_info (id, user_id, real_name, 
-      card_id, phone_number, union_id, 
-      nick_name, valid, create_time, 
+  <insert id="insert" parameterType="com.model.UserInfo">
+    insert into ssj_user_info (id, user_id, real_name,
+      card_id, phone_number, union_id,
+      nick_name, valid, create_time,
       update_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
-      #{cardId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, 
-      #{nickName,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+      #{cardId,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR},
+      #{nickName,jdbcType=VARCHAR}, #{valid,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ssj.user.model.UserInfo">
+  <insert id="insertSelective" parameterType="com.model.UserInfo">
     insert into ssj_user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -105,7 +253,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ssj.user.model.UserInfo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.UserInfo">
     update ssj_user_info
     <set>
       <if test="userId != null">
@@ -138,7 +286,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ssj.user.model.UserInfo">
+  <update id="updateByPrimaryKey" parameterType="com.model.UserInfo">
     update ssj_user_info
     set user_id = #{userId,jdbcType=VARCHAR},
       real_name = #{realName,jdbcType=VARCHAR},
@@ -151,9 +299,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  
+
   <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from ssj_user_info
     where wx_union_id = #{wxUnionId,jdbcType=VARCHAR}
