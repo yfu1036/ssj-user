@@ -2,10 +2,10 @@ package com.ssj.user.controller;
 
 import javax.validation.Valid;
 
+import com.ssj.user.request.AccountListRequest;
+import com.ssj.user.response.AccountListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssj.user.common.CommonResponse;
 import com.ssj.user.request.WxloginRequest;
@@ -28,5 +28,14 @@ public class UserController {
 	public CommonResponse<String> wxLogin(@Valid @RequestBody WxloginRequest wxReq) {
 		String token = userService.wxLogin(wxReq);
 		return CommonResponse.success(token);
+	}
+
+	@ApiOperation(value = "获取账户列表", notes = "密码认证，返回信息加密")
+	@GetMapping("/api/auth/encrypt/getAccountList")
+	public CommonResponse<AccountListResponse> getAccountList(
+			@Valid
+			@RequestParam(value = "password") String password) {
+		AccountListResponse res = userService.getAccountList(password);
+		return CommonResponse.success(res);
 	}
 }

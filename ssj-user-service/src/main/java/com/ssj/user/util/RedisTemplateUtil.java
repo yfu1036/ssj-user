@@ -1,4 +1,4 @@
-package com.ssj.user.component;
+package com.ssj.user.util;
 
 import java.util.List;
 import java.util.Map;

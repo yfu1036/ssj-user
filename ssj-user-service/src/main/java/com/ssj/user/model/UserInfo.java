@@ -1,8 +1,8 @@
 package com.ssj.user.model;
 
-import java.util.Date;
-
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class UserInfo {
@@ -19,6 +19,8 @@ public class UserInfo {
     private String unionId;
 
     private String nickName;
+
+    private String password;
 
     private Short isValid;
 

@@ -1,4 +1,4 @@
-package com.ssj.user.component;
+package com.ssj.user.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package com.ssj.user.common;
 
+import com.alibaba.fastjson.JSON;
 import com.ssj.user.enums.ResponseCodeEnum;
 
 import lombok.AllArgsConstructor;
@@ -34,5 +35,9 @@ public class CommonResponse<T> {
 	
 	public static <T> CommonResponse<T> fail(Integer code, String msg) {
 		return new CommonResponse<>(code, msg, null);
+	}
+
+	public String toString() {
+		return JSON.toJSONString(this);
 	}
 }

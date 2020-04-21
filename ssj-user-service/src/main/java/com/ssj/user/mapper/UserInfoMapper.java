@@ -1,6 +1,7 @@
 package com.ssj.user.mapper;
 
 import com.ssj.user.model.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,6 +15,6 @@ public interface UserInfoMapper {
     int updateByPrimaryKeySelective(UserInfo record);
 
     int updateByPrimaryKey(UserInfo record);
-    
-    UserInfo selectByUnionId(String wxUnionId);
+
+    UserInfo selectByUnionId(@Param(value = "wxUnionId") String wxUnionId);
 }

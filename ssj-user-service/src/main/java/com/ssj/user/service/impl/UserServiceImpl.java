@@ -3,13 +3,14 @@ package com.ssj.user.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.ssj.user.common.CommonBusinessException;
 import com.ssj.user.common.CommonConst;
-import com.ssj.user.component.RedisJedisUtil;
-import com.ssj.user.component.RedisTemplateUtil;
 import com.ssj.user.enums.ResponseCodeEnum;
 import com.ssj.user.mapper.UserInfoMapper;
 import com.ssj.user.model.UserInfo;
+import com.ssj.user.request.AccountListRequest;
 import com.ssj.user.request.WxloginRequest;
+import com.ssj.user.response.AccountListResponse;
 import com.ssj.user.service.UserService;
+import com.ssj.user.util.RedisJedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,6 @@ public class UserServiceImpl implements UserService {
 	private RestTemplate restTemplate;
 
 	@Autowired
-	private RedisTemplateUtil redisTemplateUtil;
-
-	@Autowired
 	private RedisJedisUtil redisJedisUtil;
 
 	@Value("${wechat.ssj.appid}")
@@ -46,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String wxLogin(WxloginRequest wxReq) {
-		//1.从微信后台获取用户信息
+		//1 从微信后台获取用户信息
 		String url = String.format(sessionUrl, appId, appSecret, wxReq.getCode());
 		String userInfoString = restTemplate.getForObject(url, String.class);
 		log.info("微信登录获取信息:{}", userInfoString);
@@ -56,14 +54,14 @@ public class UserServiceImpl implements UserService {
 					ResponseCodeEnum.GET_WXINFO_ERROR.getMsg());
 		}
 		
-		//2.调用微信后台获取该用户unionId
+		//2 调用微信后台获取该用户unionId
 		String wxUnionId = null != wxJson.get("unionid") ? wxJson.get("unionid").toString() : wxJson.get("openid").toString();
 		if(StringUtils.isBlank(wxUnionId)) {
 			throw new CommonBusinessException(ResponseCodeEnum.GET_WXINFO_ERROR.getCode(), 
 					ResponseCodeEnum.GET_WXINFO_ERROR.getMsg());
 		}
 		
-		//3.新增或更新该用户信息
+		//3 新增或更新该用户信息
 		UserInfo userInfoExist = userInfoMapper.selectByUnionId(wxUnionId);
 		if(null == userInfoExist) {
 			userInfoExist = new UserInfo();
@@ -79,11 +77,18 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		
-		//4.生成token放入redis并返回
-		String token = UUID.randomUUID().toString().trim().replaceAll("-", "");
-		redisTemplateUtil.set(token, JSONObject.toJSONString(userInfoExist), CommonConst.TOKEN_EXPIRE_TIME);
+		//4 生成token放入redis并返回
+		String token = CommonConst.TOKEN_PREFIX+UUID.randomUUID().toString().trim().replaceAll("-", "");
+		redisJedisUtil.setStringEx(token, CommonConst.TOKEN_EXPIRE_TIME, JSONObject.toJSONString(userInfoExist));
 		
 		return token;
+	}
+
+	@Override
+	public AccountListResponse getAccountList(String password) {
+		//1 校验密码是否正确
+		//2 组装账户密码列表
+		return null;
 	}
 
 }

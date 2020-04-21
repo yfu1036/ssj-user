@@ -1,6 +1,8 @@
 package com.ssj.user.service;
 
+import com.ssj.user.request.AccountListRequest;
 import com.ssj.user.request.WxloginRequest;
+import com.ssj.user.response.AccountListResponse;
 
 public interface UserService {
 
@@ -9,6 +11,12 @@ public interface UserService {
 	 * @param wxReq
 	 * @return
 	 */
-	public String wxLogin(WxloginRequest wxReq);
+	String wxLogin(WxloginRequest wxReq);
 
+	/**
+	 * 根据密码获取账户列表
+	 * @param password
+	 * @return
+	 */
+	AccountListResponse getAccountList(String password);
 }

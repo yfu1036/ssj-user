@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssj.user.mapper.UserAccountInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ssj.user.model.UserAccountInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="account_type" jdbcType="VARCHAR" property="accountType" />
+    <result column="account_source" jdbcType="VARCHAR" property="accountSource" />
+    <result column="account_register" jdbcType="VARCHAR" property="accountRegister" />
+    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
+    <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
+    <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
+    <result column="secret" jdbcType="VARCHAR" property="secret" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="is_valid" jdbcType="SMALLINT" property="isValid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, account_type, account_source, account_register, account_id, login_password, 
+    pay_password, secret, source, is_valid, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ssj_user_account_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ssj_user_account_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssj.user.model.UserAccountInfo">
+    insert into ssj_user_account_info (id, user_id, account_type, 
+      account_source, account_register, account_id, 
+      login_password, pay_password, secret, 
+      source, is_valid, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, 
+      #{accountSource,jdbcType=VARCHAR}, #{accountRegister,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, 
+      #{loginPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{isValid,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssj.user.model.UserAccountInfo">
+    insert into ssj_user_account_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="accountSource != null">
+        account_source,
+      </if>
+      <if test="accountRegister != null">
+        account_register,
+      </if>
+      <if test="accountId != null">
+        account_id,
+      </if>
+      <if test="loginPassword != null">
+        login_password,
+      </if>
+      <if test="payPassword != null">
+        pay_password,
+      </if>
+      <if test="secret != null">
+        secret,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="isValid != null">
+        is_valid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountSource != null">
+        #{accountSource,jdbcType=VARCHAR},
+      </if>
+      <if test="accountRegister != null">
+        #{accountRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null">
+        #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        #{isValid,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssj.user.model.UserAccountInfo">
+    update ssj_user_account_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=VARCHAR},
+      </if>
+      <if test="accountSource != null">
+        account_source = #{accountSource,jdbcType=VARCHAR},
+      </if>
+      <if test="accountRegister != null">
+        account_register = #{accountRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null">
+        account_id = #{accountId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null">
+        login_password = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null">
+        secret = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="isValid != null">
+        is_valid = #{isValid,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssj.user.model.UserAccountInfo">
+    update ssj_user_account_info
+    set user_id = #{userId,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=VARCHAR},
+      account_source = #{accountSource,jdbcType=VARCHAR},
+      account_register = #{accountRegister,jdbcType=VARCHAR},
+      account_id = #{accountId,jdbcType=VARCHAR},
+      login_password = #{loginPassword,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      secret = #{secret,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      is_valid = #{isValid,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
