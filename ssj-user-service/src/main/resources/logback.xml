@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="LOG_HOME" value="log" />
+    <property name="LOG_HOME" value="./logs" />
     
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -13,54 +13,54 @@
 
     <!-- 按照每天生成日志文件-ALL -->
     <appender name="ALLFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/user-all.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!--日志文件保留天数-->
+            <FileNamePattern>${LOG_HOME}/user-all.%d{yyyy-MM-dd}#%i.log</FileNamePattern>
+            <!--日志文件保留15天,每个文件最大500MB,总共最大10GB-->
             <MaxHistory>15</MaxHistory>
+            <maxFileSize>500MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{30}:%line - %msg%n</pattern>
         </encoder>
-        <!--日志文件最大的大小-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>50MB</MaxFileSize>
-        </triggeringPolicy>
+        <!-- 只保存INFO及以上级别日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
     </appender>
 
     <!-- 按照每天生成日志文件-ERROR -->
     <appender name="ERRORFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/user-error.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!--日志文件保留天数-->
+            <FileNamePattern>${LOG_HOME}/user-error.%d{yyyy-MM-dd}#%i.log</FileNamePattern>
+            <!--日志文件保留15天,每个文件最大500MB,总共最大10GB-->
             <MaxHistory>15</MaxHistory>
+            <maxFileSize>500MB</maxFileSize>
+            <totalSizeCap>10GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{30}:%line - %msg%n</pattern>
         </encoder>
-        <!--日志文件最大的大小-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>20MB</MaxFileSize>
-        </triggeringPolicy>
-        <!-- 日志级别过滤 -->
+        <!-- 只保存ERROR及以上级别日志 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         	<level>ERROR</level>
         </filter>
     </appender>
 
     <!-- 最上级日志输出级别 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="ALLFILE" />
         <appender-ref ref="ERRORFILE" />
     </root>
 
     <!--com.ssj.user.mapper包下面sql打印debug日志，并且不向root上级传递-->
-    <logger name="com.ssj.user.mapper" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
+    <!--<logger name="com.ssj.user.mapper" level="DEBUG" additivity="false">-->
+        <!--<appender-ref ref="STDOUT"/>-->
+    <!--</logger>-->
 
 </configuration>

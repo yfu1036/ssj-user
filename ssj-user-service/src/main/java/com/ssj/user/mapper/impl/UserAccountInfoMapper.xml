@@ -11,17 +11,16 @@
     <result column="login_password" jdbcType="VARCHAR" property="loginPassword" />
     <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
     <result column="secret" jdbcType="VARCHAR" property="secret" />
-    <result column="source" jdbcType="VARCHAR" property="source" />
     <result column="is_valid" jdbcType="SMALLINT" property="isValid" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, account_type, account_source, account_register, account_id, login_password, 
-    pay_password, secret, source, is_valid, create_time, update_time
+    id, user_id, account_type, account_source, account_register, account_id, login_password,
+    pay_password, secret, is_valid, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from ssj_user_account_info
     where id = #{id,jdbcType=BIGINT}
@@ -31,16 +30,16 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.ssj.user.model.UserAccountInfo">
-    insert into ssj_user_account_info (id, user_id, account_type, 
-      account_source, account_register, account_id, 
-      login_password, pay_password, secret, 
-      source, is_valid, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR}, 
-      #{accountSource,jdbcType=VARCHAR}, #{accountRegister,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR}, 
-      #{loginPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR}, 
-      #{source,jdbcType=VARCHAR}, #{isValid,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into ssj_user_account_info (id, user_id, account_type,
+      account_source, account_register, account_id,
+      login_password, pay_password, secret,
+      is_valid, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR},
+      #{accountSource,jdbcType=VARCHAR}, #{accountRegister,jdbcType=VARCHAR}, #{accountId,jdbcType=VARCHAR},
+      #{loginPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR},
+      #{isValid,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ssj.user.model.UserAccountInfo">
     insert into ssj_user_account_info
@@ -71,9 +70,6 @@
       </if>
       <if test="secret != null">
         secret,
-      </if>
-      <if test="source != null">
-        source,
       </if>
       <if test="isValid != null">
         is_valid,
@@ -113,9 +109,6 @@
       <if test="secret != null">
         #{secret,jdbcType=VARCHAR},
       </if>
-      <if test="source != null">
-        #{source,jdbcType=VARCHAR},
-      </if>
       <if test="isValid != null">
         #{isValid,jdbcType=SMALLINT},
       </if>
@@ -154,9 +147,6 @@
       <if test="secret != null">
         secret = #{secret,jdbcType=VARCHAR},
       </if>
-      <if test="source != null">
-        source = #{source,jdbcType=VARCHAR},
-      </if>
       <if test="isValid != null">
         is_valid = #{isValid,jdbcType=SMALLINT},
       </if>
@@ -179,7 +169,6 @@
       login_password = #{loginPassword,jdbcType=VARCHAR},
       pay_password = #{payPassword,jdbcType=VARCHAR},
       secret = #{secret,jdbcType=VARCHAR},
-      source = #{source,jdbcType=VARCHAR},
       is_valid = #{isValid,jdbcType=SMALLINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

@@ -6,7 +6,6 @@ import com.ssj.user.common.CommonConst;
 import com.ssj.user.enums.ResponseCodeEnum;
 import com.ssj.user.mapper.UserInfoMapper;
 import com.ssj.user.model.UserInfo;
-import com.ssj.user.request.AccountListRequest;
 import com.ssj.user.request.WxloginRequest;
 import com.ssj.user.response.AccountListResponse;
 import com.ssj.user.service.UserService;

@@ -30,5 +30,5 @@ HELP.md
 
 .project
 .classpath
-/log/
+/logs/
 /.mvn/

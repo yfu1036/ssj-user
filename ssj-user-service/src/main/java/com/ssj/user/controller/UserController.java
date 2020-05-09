@@ -1,19 +1,16 @@
 package com.ssj.user.controller;
 
-import javax.validation.Valid;
-
-import com.ssj.user.request.AccountListRequest;
-import com.ssj.user.response.AccountListResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import com.ssj.user.common.CommonResponse;
 import com.ssj.user.request.WxloginRequest;
+import com.ssj.user.response.AccountListResponse;
 import com.ssj.user.service.UserService;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Api(tags = "用户接口")
 @RestController
@@ -38,4 +35,5 @@ public class UserController {
 		AccountListResponse res = userService.getAccountList(password);
 		return CommonResponse.success(res);
 	}
+
 }

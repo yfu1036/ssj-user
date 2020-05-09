@@ -17,7 +17,6 @@ CREATE TABLE "public"."ssj_user_account_info" (
 	"login_password" varchar(100) NOT NULL,
 	"pay_password" varchar(100),
 	"secret" varchar(200),
-	"source" varchar(20),
 	"is_valid" int2 NOT NULL DEFAULT 1,
 	"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -38,7 +37,7 @@ COMMENT ON COLUMN "public"."ssj_user_account_info"."user_id" IS '用户id';
 COMMENT ON COLUMN "public"."ssj_user_account_info"."account_type" IS '账户类型';
 COMMENT ON COLUMN "public"."ssj_user_account_info"."account_source" IS '账户来源';
 COMMENT ON COLUMN "public"."ssj_user_account_info"."account_register" IS '账户注册地';
-COMMENT ON COLUMN "public"."ssj_user_account_info"."account_id" IS '账户id(唯一)';
+COMMENT ON COLUMN "public"."ssj_user_account_info"."account_id" IS '账户id';
 COMMENT ON COLUMN "public"."ssj_user_account_info"."login_password" IS '账户登录密码';
 COMMENT ON COLUMN "public"."ssj_user_account_info"."pay_password" IS '账户交易密码';
 COMMENT ON COLUMN "public"."ssj_user_account_info"."secret" IS '账户秘密信息';
@@ -50,6 +49,6 @@ ALTER SEQUENCE "public"."ssj_user_account_info_id_seq" OWNED BY "public"."ssj_us
 
 ALTER TABLE "public"."ssj_user_account_info" ADD CONSTRAINT "ssj_user_account_info_pk_id" PRIMARY KEY ("id");
 
-CREATE INDEX ssj_user_account_info_idx_user_id ON "public"."ssj_user_account_info" (user_id);
+CREATE INDEX ssj_user_account_info_idx_user_id ON "public"."ssj_user_account_info" (user_id,account_type,account_source);
 
-CREATE UNIQUE INDEX ssj_user_account_info_ud_account_id ON "public"."ssj_user_account_info" (account_id);
+CREATE INDEX ssj_user_account_info_ud_account_id ON "public"."ssj_user_account_info" (account_id);

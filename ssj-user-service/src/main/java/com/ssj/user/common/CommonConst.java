@@ -7,7 +7,7 @@ public interface CommonConst {
 	/**
 	 * token前缀
 	 */
-	String TOKEN_PREFIX = "user_";
+	String TOKEN_PREFIX = "ssj-user_";
 
 	/**
 	 * token过期时间：一个月
@@ -18,4 +18,10 @@ public interface CommonConst {
 	 * 请求头登录校验token
 	 */
 	String TOKEN = "token";
+
+	/**
+	 * 开关打开
+	 */
+	String SWITCH_ON = "1";
+
 }

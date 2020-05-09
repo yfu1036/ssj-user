@@ -24,8 +24,6 @@ public class UserAccountInfo {
 
     private String secret;
 
-    private String source;
-
     private Short isValid;
 
     private Date createTime;

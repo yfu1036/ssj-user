@@ -56,11 +56,11 @@ public class ControllerLogAspect {
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(filteredArgs)) {
             //拼接请求参数
-            rqsParams = IntStream.range(0, filteredArgs.size())
+            /*rqsParams = IntStream.range(0, filteredArgs.size())
                     .boxed()
-                    .collect(Collectors.toMap(j -> params[j], j -> filteredArgs.get(j)));
+                    .collect(Collectors.toMap(j -> params[j], j -> filteredArgs.get(j)));*/
         }
-        log.info("请求uri:{},method:{},入参:{}", uri, methodName, JSONObject.toJSONString(rqsParams));
+        log.info("请求uri:{},method:{},入参:{}", uri, methodName, JSONObject.toJSONString(filteredArgs));
         long startTime = System.currentTimeMillis();
 
         //2 执行原方法
