@@ -49,6 +49,6 @@ ALTER SEQUENCE "public"."ssj_user_account_info_id_seq" OWNED BY "public"."ssj_us
 
 ALTER TABLE "public"."ssj_user_account_info" ADD CONSTRAINT "ssj_user_account_info_pk_id" PRIMARY KEY ("id");
 
-CREATE INDEX ssj_user_account_info_idx_user_id ON "public"."ssj_user_account_info" (user_id,account_type,account_source);
+CREATE INDEX ssj_user_account_info_idx_user_id ON "public"."ssj_user_account_info" (user_id,account_type);
 
 CREATE INDEX ssj_user_account_info_ud_account_id ON "public"."ssj_user_account_info" (account_id);
