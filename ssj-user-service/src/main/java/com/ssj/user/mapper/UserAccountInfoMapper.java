@@ -26,4 +26,22 @@ public interface UserAccountInfoMapper {
      */
     List<UserAccountInfo> selectByUserIdType(@Param(value = "userId")String userId,
                                              @Param(value = "accountType")String accountType);
+
+    /**
+     * 根据用户id和id查询
+     * @param userId
+     * @param id
+     * @return
+     */
+    UserAccountInfo selectByIdUser(@Param(value = "userId")String userId,
+                                   @Param(value = "id")Long id);
+
+    /**
+     * 根据用户id和账户id查询
+     * @param userId
+     * @param accountId
+     * @return
+     */
+    UserAccountInfo selectByUserAccountId(@Param(value = "userId")String userId,
+                                          @Param(value = "accountId")String accountId);
 }

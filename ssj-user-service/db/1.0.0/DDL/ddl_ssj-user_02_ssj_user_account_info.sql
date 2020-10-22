@@ -51,4 +51,4 @@ ALTER TABLE "public"."ssj_user_account_info" ADD CONSTRAINT "ssj_user_account_in
 
 CREATE INDEX ssj_user_account_info_idx_user_id ON "public"."ssj_user_account_info" (user_id,account_type);
 
-CREATE INDEX ssj_user_account_info_ud_account_id ON "public"."ssj_user_account_info" (account_id);
+CREATE UNIQUE INDEX ssj_user_account_info_ud_account_id ON "public"."ssj_user_account_info" (account_id);

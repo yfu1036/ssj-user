@@ -1,7 +1,6 @@
 package com.ssj.user.service;
 
-import com.ssj.user.request.WxloginRequest;
-import com.ssj.user.response.AccountListResponse;
+import com.ssj.user.dto.request.WxloginRequest;
 
 public interface UserService {
 
@@ -13,10 +12,16 @@ public interface UserService {
 	String wxLogin(WxloginRequest wxReq);
 
 	/**
-	 * 根据账户类型和密码获取账户列表
+	 * 登录测试
 	 * @param userId
-	 * @param accountType
 	 * @return
 	 */
-	AccountListResponse getAccountList(String userId, String accountType);
+	String loginTest(String unionId);
+
+	/**
+	 * 退出登录
+	 * @param token
+	 */
+	void logout(String token);
+
 }

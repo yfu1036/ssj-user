@@ -1,4 +1,4 @@
-package com.ssj.user.request;
+package com.ssj.user.dto.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

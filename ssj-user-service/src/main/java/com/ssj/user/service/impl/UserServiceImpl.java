@@ -1,30 +1,21 @@
 package com.ssj.user.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ssj.user.common.CommonBusinessException;
+import com.ssj.user.common.CommonException;
 import com.ssj.user.common.CommonConst;
-import com.ssj.user.common.CommonResponse;
-import com.ssj.user.enums.ResponseCodeEnum;
-import com.ssj.user.mapper.UserAccountInfoMapper;
+import com.ssj.user.dto.request.WxloginRequest;
+import com.ssj.user.enums.ErrorCodeEnum;
 import com.ssj.user.mapper.UserInfoMapper;
-import com.ssj.user.model.UserAccountInfo;
 import com.ssj.user.model.UserInfo;
-import com.ssj.user.request.WxloginRequest;
-import com.ssj.user.response.AccountListResponse;
-import com.ssj.user.response.AccountResponse;
 import com.ssj.user.service.UserService;
 import com.ssj.user.util.RedisJedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,9 +24,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserInfoMapper userInfoMapper;
-
-	@Autowired
-	private UserAccountInfoMapper userAccountInfoMapper;
 
 	@Value("${wechat.jscode2session.url}")
 	private String sessionUrl;
@@ -60,17 +48,17 @@ public class UserServiceImpl implements UserService {
 		log.info("微信登录获取信息:{}", userInfoString);
 		JSONObject wxJson = JSONObject.parseObject(userInfoString);
 		if(StringUtils.isBlank(userInfoString) || StringUtils.isNotBlank(wxJson.get("errcode").toString())) {
-			throw new CommonBusinessException(ResponseCodeEnum.GET_WXINFO_ERROR.getCode(), 
-					ResponseCodeEnum.GET_WXINFO_ERROR.getMsg());
+			throw new CommonException(ErrorCodeEnum.GET_WXINFO_ERROR.getCode(),
+					ErrorCodeEnum.GET_WXINFO_ERROR.getMsg());
 		}
 		
 		//2 调用微信后台获取该用户unionId
 		String wxUnionId = null != wxJson.get("unionid") ? wxJson.get("unionid").toString() : wxJson.get("openid").toString();
 		if(StringUtils.isBlank(wxUnionId)) {
-			throw new CommonBusinessException(ResponseCodeEnum.GET_WXINFO_ERROR.getCode(), 
-					ResponseCodeEnum.GET_WXINFO_ERROR.getMsg());
+			throw new CommonException(ErrorCodeEnum.GET_WXINFO_ERROR.getCode(),
+					ErrorCodeEnum.GET_WXINFO_ERROR.getMsg());
 		}
-		
+
 		//3 新增或更新该用户信息
 		UserInfo userInfoExist = userInfoMapper.selectByUnionId(wxUnionId);
 		if(null == userInfoExist) {
@@ -95,29 +83,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public AccountListResponse getAccountList(String userId, String accountType) {
-		//1 查询该用户账户类型账户列表
-		List<UserAccountInfo> accountExtList = userAccountInfoMapper.selectByUserIdType(userId, accountType);
-		if(CollectionUtils.isEmpty(accountExtList)) {
-			throw new CommonBusinessException(ResponseCodeEnum.USER_ACCOUNT_NULL.getCode(),
-					ResponseCodeEnum.USER_ACCOUNT_NULL.getMsg());
+	public String loginTest(String unionId) {
+		UserInfo userInfoExist = userInfoMapper.selectByUnionId(unionId);
+		if(null == userInfoExist) {
+			userInfoExist = new UserInfo();
+			userInfoExist.setUserId(UUID.randomUUID().toString().trim().replaceAll("-", ""));
+			userInfoExist.setUnionId(unionId);
+			userInfoExist.setNickName("用户" + System.currentTimeMillis());
+			userInfoMapper.insertSelective(userInfoExist);
 		}
+		String token = CommonConst.TOKEN_PREFIX+UUID.randomUUID().toString().trim().replaceAll("-", "");
+		redisJedisUtil.setStringEx(token, CommonConst.TOKEN_EXPIRE_TIME, JSONObject.toJSONString(userInfoExist));
+		return token;
+	}
 
-		//2 组装账户列表
-		List<AccountResponse> accountRespList = new ArrayList<AccountResponse>();
-		for(UserAccountInfo account : accountExtList) {
-			AccountResponse resp = new AccountResponse();
-			BeanUtils.copyProperties(account, resp);
-			if(resp.getAccountId().length() >= 6) {
-				int index = resp.getAccountId().length()/4;
-				resp.setAccountId(resp.getAccountId().substring(0, index) + "****" +
-						resp.getAccountId().substring(index + 4));
-			}
-			accountRespList.add(resp);
-		}
-		AccountListResponse resp = new AccountListResponse();
-		resp.setAccountList(accountRespList);
-		return resp;
+	@Override
+	public void logout(String token) {
+		redisJedisUtil.delKey(token);
 	}
 
 }

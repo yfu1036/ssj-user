@@ -16,5 +16,5 @@ public interface UserInfoMapper {
 
     int updateByPrimaryKey(UserInfo record);
 
-    UserInfo selectByUnionId(@Param(value = "wxUnionId") String wxUnionId);
+    UserInfo selectByUnionId(@Param(value = "unionId") String unionId);
 }

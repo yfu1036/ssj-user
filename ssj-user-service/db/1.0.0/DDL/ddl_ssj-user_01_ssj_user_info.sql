@@ -15,7 +15,7 @@ CREATE TABLE "public"."ssj_user_info" (
 	"phone_number" varchar(100),
 	"union_id" varchar(100),
 	"nick_name" varchar(100) NOT NULL,
-	"password" varchar(100) NOT NULL,
+	"password" varchar(100),
 	"is_valid" int2 NOT NULL DEFAULT 1,
 	"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP

@@ -1,9 +1,9 @@
-package com.ssj.user.response;
+package com.ssj.user.dto.response;
 
 import lombok.Data;
 
 @Data
-public class AccountResponse {
+public class AccountListResponse {
 
     private Long id;
 

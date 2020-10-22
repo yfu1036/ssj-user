@@ -183,4 +183,20 @@
     where user_id = #{userId,jdbcType=VARCHAR}
       and account_type = #{accountType,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByIdUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ssj_user_account_info
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByUserAccountId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ssj_user_account_info
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and account_id = #{accountId,jdbcType=VARCHAR}
+  </select>
 </mapper>

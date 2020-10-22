@@ -2,7 +2,7 @@ package com.ssj.user.util;
 
 import java.security.MessageDigest;
 
-public class MathUtil {
+public class Md5Util {
 
 	public final static String stringToMd5(String s) {
 		char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

@@ -77,6 +77,18 @@ public class RedisJedisUtil {
         }
     }
 
+    public boolean expireKey(String key, int seconds) {
+        Jedis jedis = jedisPool.getResource();
+        try {
+            jedis.expire(key, seconds);
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            close(jedis);
+        }
+    }
+
     public boolean setHash(String key, String mKey, String mVal) {
         Jedis jedis = jedisPool.getResource();
         try {
