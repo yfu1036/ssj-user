@@ -47,17 +47,14 @@ public class UserServiceImpl implements UserService {
 		String userInfoString = restTemplate.getForObject(url, String.class);
 		log.info("微信登录获取信息:{}", userInfoString);
 		JSONObject wxJson = JSONObject.parseObject(userInfoString);
-		if(StringUtils.isBlank(userInfoString) || StringUtils.isNotBlank(wxJson.get("errcode").toString())) {
+		if(StringUtils.isBlank(userInfoString) || null != wxJson.get("errcode") ||
+				null == wxJson.get("openid")) {
 			throw new CommonException(ErrorCodeEnum.GET_WXINFO_ERROR.getCode(),
 					ErrorCodeEnum.GET_WXINFO_ERROR.getMsg());
 		}
 		
-		//2 调用微信后台获取该用户unionId
-		String wxUnionId = null != wxJson.get("unionid") ? wxJson.get("unionid").toString() : wxJson.get("openid").toString();
-		if(StringUtils.isBlank(wxUnionId)) {
-			throw new CommonException(ErrorCodeEnum.GET_WXINFO_ERROR.getCode(),
-					ErrorCodeEnum.GET_WXINFO_ERROR.getMsg());
-		}
+		//2 调用微信后台获取该用户openid
+		String wxUnionId = wxJson.get("openid").toString();
 
 		//3 新增或更新该用户信息
 		UserInfo userInfoExist = userInfoMapper.selectByUnionId(wxUnionId);
@@ -76,7 +73,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		//4 生成token放入redis并返回
-		String token = CommonConst.TOKEN_PREFIX+UUID.randomUUID().toString().trim().replaceAll("-", "");
+		String token = UUID.randomUUID().toString().trim().replaceAll("-", "");
 		redisJedisUtil.setStringEx(token, CommonConst.TOKEN_EXPIRE_TIME, JSONObject.toJSONString(userInfoExist));
 		
 		return token;
@@ -92,7 +89,7 @@ public class UserServiceImpl implements UserService {
 			userInfoExist.setNickName("用户" + System.currentTimeMillis());
 			userInfoMapper.insertSelective(userInfoExist);
 		}
-		String token = CommonConst.TOKEN_PREFIX+UUID.randomUUID().toString().trim().replaceAll("-", "");
+		String token = UUID.randomUUID().toString().trim().replaceAll("-", "");
 		redisJedisUtil.setStringEx(token, CommonConst.TOKEN_EXPIRE_TIME, JSONObject.toJSONString(userInfoExist));
 		return token;
 	}

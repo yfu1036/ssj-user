@@ -72,9 +72,9 @@ public class AccountServiceImpl implements AccountService {
 		BeanUtils.copyProperties(accountInfo, resp);
 		//解密
 		resp.setAccountId(AESUtil.decryptBasedAes(resp.getAccountId()));
-		resp.setLoginPassword(AESUtil.decryptBasedAes(resp.getLoginPassword()));
+		/*resp.setLoginPassword(AESUtil.decryptBasedAes(resp.getLoginPassword()));
 		resp.setPayPassword(AESUtil.decryptBasedAes(resp.getPayPassword()));
-		resp.setSecret(AESUtil.decryptBasedAes(resp.getSecret()));
+		resp.setSecret(AESUtil.decryptBasedAes(resp.getSecret()));*/
 		return resp;
 	}
 

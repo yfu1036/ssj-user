@@ -31,12 +31,12 @@ public class UserController {
 		return CommonResponse.success(token);
 	}
 
-	@ApiOperation(value = "登录测试", notes = "登录测试")
+	/*@ApiOperation(value = "登录测试", notes = "登录测试")
 	@GetMapping("/api/auth/loginTest")
 	public CommonResponse<String> loginTest(@RequestParam String unionId) {
 		String token = userService.loginTest(unionId);
 		return CommonResponse.success(token);
-	}
+	}*/
 
 	@ApiOperation(value = "退出登录")
 	@PostMapping("/api/release/logput")

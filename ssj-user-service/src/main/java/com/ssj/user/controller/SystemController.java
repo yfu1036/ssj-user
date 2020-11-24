@@ -1,6 +1,9 @@
 package com.ssj.user.controller;
 
+import com.ssj.user.common.CommonResponse;
+import com.ssj.user.util.AESUtil;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -15,5 +18,11 @@ public class SystemController {
 	public String version() {
 		return "ssj-user1.0.0";
 	}
-	
+
+	@ApiOperation(value = "解密", notes = "获取解密信息")
+	@GetMapping("/api/auth/decrypt")
+	public CommonResponse<String> decrypt(@RequestParam String content) {
+		return CommonResponse.success(AESUtil.decryptBasedAes(content));
+	}
+
 }
