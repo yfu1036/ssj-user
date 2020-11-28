@@ -87,10 +87,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- ELK -->
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
@@ -107,6 +112,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>ssj-user-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
